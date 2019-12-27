@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OnGetMoviesCallback {
 
-    void onSuccess(List<Movie> movies);
+    void onSuccess(int page, List<Movie> movies);
 
     void onError();
 }

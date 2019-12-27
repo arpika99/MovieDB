@@ -1,5 +1,7 @@
 package com.example.moviedb.Classes;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.moviedb.BuildConfig;
@@ -38,15 +40,16 @@ public class MoviesRepository {
         return repository;
     }
 
-    public void getMovies(final OnGetMoviesCallback callback) {
-        api.getPopularMovies("466a9f47f821cb714d428de9e51676fe", LANGUAGE, 1)
+    public void getMovies(int page, final OnGetMoviesCallback callback) {
+        Log.d("MoviesRepository", "Next Page = " + page);
+        api.getPopularMovies("466a9f47f821cb714d428de9e51676fe", LANGUAGE, page)
                 .enqueue(new Callback<MoviesResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
                         if (response.isSuccessful()) {
                             MoviesResponse moviesResponse = response.body();
                             if (moviesResponse != null && moviesResponse.getMovies() != null) {
-                                callback.onSuccess(moviesResponse.getMovies());
+                                callback.onSuccess(moviesResponse.getPage(), moviesResponse.getMovies());
                             } else {
                                 callback.onError();
                             }

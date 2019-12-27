@@ -4,10 +4,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.moviedb.Classes.Genre;
 import com.example.moviedb.Classes.Movie;
 import com.example.moviedb.R;
@@ -17,12 +20,14 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
 
+    private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500";
+
     private List<Genre> allGenres;
     private List<Movie> movies;
 
-    public MoviesAdapter(List<Movie> movies) {
-        this.movies = movies;
-    }
+//    public MoviesAdapter(List<Movie> movies) {
+//        this.movies = movies;
+//    }
 
     public MoviesAdapter(List<Movie> movies, List<Genre> allGenres) {
         this.movies = movies;
@@ -45,12 +50,18 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         return movies.size();
     }
 
+    public void appendMovies(List<Movie> moviesToAppend) {
+        movies.addAll(moviesToAppend);
+        notifyDataSetChanged();
+    }
+
     class MovieViewHolder extends RecyclerView.ViewHolder {
 
         private TextView releaseDate;
         private TextView title;
         private TextView rating;
         private TextView genres;
+        private ImageView poster;
 
         public MovieViewHolder(View itemView) {
             super(itemView);
@@ -58,6 +69,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             title = itemView.findViewById(R.id.item_movie_title);
             rating = itemView.findViewById(R.id.item_movie_rating);
             genres = itemView.findViewById(R.id.item_movie_genre);
+            poster = itemView.findViewById(R.id.item_movie_poster);
         }
 
         public void bind(Movie movie) {
@@ -65,6 +77,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             title.setText(movie.getTitle());
             rating.setText(String.valueOf(movie.getRating()));
             genres.setText(getGenres(movie.getGenreIds()));
+            Glide.with(itemView)
+                    .load(IMAGE_BASE_URL + movie.getPosterPath())
+                    .apply(RequestOptions.placeholderOf(R.color.colorPrimary))
+                    .into(poster);
         }
 
         private String getGenres(List<Integer> genreIds) {
