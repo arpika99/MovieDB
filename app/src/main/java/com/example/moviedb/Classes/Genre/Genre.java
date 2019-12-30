@@ -1,4 +1,4 @@
-package com.example.moviedb.Classes;
+package com.example.moviedb.Classes.Genre;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

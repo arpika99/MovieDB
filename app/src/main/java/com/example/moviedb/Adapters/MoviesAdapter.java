@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.moviedb.Classes.Genre;
-import com.example.moviedb.Classes.Movie;
+import com.example.moviedb.Classes.Genre.Genre;
+import com.example.moviedb.Classes.Movie.Movie;
+import com.example.moviedb.Interfaces.OnMoviesClickCallback;
 import com.example.moviedb.R;
 
 import java.util.ArrayList;
@@ -24,14 +25,21 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     private List<Genre> allGenres;
     private List<Movie> movies;
+    private OnMoviesClickCallback callback;
 
 //    public MoviesAdapter(List<Movie> movies) {
 //        this.movies = movies;
 //    }
 
-    public MoviesAdapter(List<Movie> movies, List<Genre> allGenres) {
-        this.movies = movies;
+//    public MoviesAdapter(List<Movie> movies, List<Genre> allGenres) {
+//        this.movies = movies;
+//        this.allGenres = allGenres;
+//    }
+
+    public MoviesAdapter(List<Movie> movies, List<Genre> allGenres, OnMoviesClickCallback callback) {
         this.allGenres = allGenres;
+        this.movies = movies;
+        this.callback = callback;
     }
 
     @Override
@@ -55,6 +63,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         notifyDataSetChanged();
     }
 
+    public void clearMovies() {
+        movies.clear();
+        notifyDataSetChanged();
+    }
+
     class MovieViewHolder extends RecyclerView.ViewHolder {
 
         private TextView releaseDate;
@@ -62,6 +75,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         private TextView rating;
         private TextView genres;
         private ImageView poster;
+        private Movie movie;
 
         public MovieViewHolder(View itemView) {
             super(itemView);
@@ -70,9 +84,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             rating = itemView.findViewById(R.id.item_movie_rating);
             genres = itemView.findViewById(R.id.item_movie_genre);
             poster = itemView.findViewById(R.id.item_movie_poster);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.onClick(movie);
+                }
+            });
         }
 
         public void bind(Movie movie) {
+            this.movie = movie;
             releaseDate.setText(movie.getReleaseDate().split("-")[0]);
             title.setText(movie.getTitle());
             rating.setText(String.valueOf(movie.getRating()));

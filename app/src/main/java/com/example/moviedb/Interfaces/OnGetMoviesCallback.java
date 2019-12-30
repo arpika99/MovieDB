@@ -1,6 +1,6 @@
 package com.example.moviedb.Interfaces;
 
-import com.example.moviedb.Classes.Movie;
+import com.example.moviedb.Classes.Movie.Movie;
 
 import java.util.List;
 

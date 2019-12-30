@@ -1,5 +1,6 @@
-package com.example.moviedb.Classes;
+package com.example.moviedb.Classes.Movie;
 
+import com.example.moviedb.Classes.Genre.Genre;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -29,6 +30,19 @@ public class Movie {
     @SerializedName("genre_ids")
     @Expose
     private List<Integer> genreIds;
+
+    @SerializedName("genres")
+    @Expose
+    private List<Genre> genres;
+
+
+    @SerializedName("overview")
+    @Expose
+    private String overview;
+
+    @SerializedName("backdrop_path")
+    @Expose
+    private String backdrop;
 
     public int getId() {
         return id;
@@ -76,5 +90,29 @@ public class Movie {
 
     public void setGenreIds(List<Integer> genreIds) {
         this.genreIds = genreIds;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getBackdrop() {
+        return backdrop;
+    }
+
+    public void setBackdrop(String backdrop) {
+        this.backdrop = backdrop;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 }
