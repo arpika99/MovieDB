@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
 
         actionBar = getSupportActionBar();
         BottomNavigationView navigation = findViewById(R.id.navigationBar);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         moviesRepository = MoviesRepository.getInstance();
         moviesList = findViewById(R.id.movies_list);
